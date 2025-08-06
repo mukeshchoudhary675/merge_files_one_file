@@ -2,6 +2,7 @@ import streamlit as st
 import openpyxl
 from openpyxl import load_workbook, Workbook
 import io
+from copy import copy
 
 st.set_page_config(page_title="Merge Excel Files with Formatting", layout="centered")
 
@@ -30,12 +31,12 @@ if uploaded_files:
                     for cell in row:
                         new_cell = copied_ws.cell(row=cell.row, column=cell.col_idx, value=cell.value)
                         if cell.has_style:
-                            new_cell.font = cell.font
-                            new_cell.border = cell.border
-                            new_cell.fill = cell.fill
-                            new_cell.number_format = cell.number_format
-                            new_cell.protection = cell.protection
-                            new_cell.alignment = cell.alignment
+                            new_cell.font = copy(cell.font)
+                            new_cell.border = copy(cell.border)
+                            new_cell.fill = copy(cell.fill)
+                            new_cell.number_format = copy(cell.number_format)
+                            new_cell.protection = copy(cell.protection)
+                            new_cell.alignment = copy(cell.alignment)
         except Exception as e:
             st.error(f"❌ Error processing file {file.name}: {str(e)}")
 
